@@ -1,0 +1,54 @@
+#ddev-generated
+
+services:
+  solr:
+    image: solr:8
+    container_name: ddev-${DDEV_SITENAME}-solr
+    expose:
+      - 8983
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    environment:
+      SOLR_HOST: ddev-${DDEV_SITENAME}-solr
+      SOLR_PORT: 8983
+      # The pre-trained OpenNLP models require a much bigger buffer.
+      SOLR_OPTS: -Djute.maxbuffer=50000000
+      #SOLR_HEAP: 1g
+      ZK_HOST: ddev-${DDEV_SITENAME}-zoo:2181
+      VIRTUAL_HOST: $DDEV_HOSTNAME
+      HTTP_EXPOSE: 8983:8983
+    depends_on:
+      - zoo
+    volumes:
+      - .:/mnt/ddev_config
+      - solr:/var/solr
+    command: bash -c "docker-entrypoint.sh solr zk cp file:/mnt/ddev_config/solr/security.json zk:/security.json && exec solr-foreground"
+
+  zoo:
+    image: bitnami/zookeeper:3.8
+    container_name: ddev-${DDEV_SITENAME}-zoo
+    hostname: ddev-${DDEV_SITENAME}-zoo
+    expose:
+      - 2181
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    environment:
+      # The pre-trained OpenNLP models require a much bigger buffer.
+      JVMFLAGS: -Djute.maxbuffer=50000000
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=ddev-${DDEV_SITENAME}-zoo1:2888:3888
+      ZOO_4LW_COMMANDS_WHITELIST: mntr, conf, ruok
+      ALLOW_ANONYMOUS_LOGIN: "yes"
+    volumes:
+      - .:/mnt/ddev_config
+      - zoo:/bitnami/zookeeper
+
+  web:
+    links:
+      - solr:solr
+
+volumes:
+  solr:
+  zoo:

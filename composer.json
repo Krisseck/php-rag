@@ -1,0 +1,19 @@
+{
+    "name": "krisseck/php-rag",
+    "require": {
+        "solarium/solarium": "^6.3",
+        "guzzlehttp/guzzle": "^7.8",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Krisseck\\PhpRag\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kristian Polso",
+            "email": "kristian@polso.info"
+        }
+    ]
+}

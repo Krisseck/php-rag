@@ -1,0 +1,10 @@
+name: solr
+repository: ddev/ddev-solr
+version: 0.2.2
+install_date: "2023-11-02T15:24:16+02:00"
+project_files:
+    - commands/solr/solr
+    - docker-compose.solr.yaml
+    - solr/security.json
+global_files: []
+removal_actions: []
