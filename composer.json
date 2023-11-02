@@ -3,7 +3,8 @@
     "require": {
         "solarium/solarium": "^6.3",
         "guzzlehttp/guzzle": "^7.8",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "symfony/event-dispatcher": "^6.3"
     },
     "autoload": {
         "psr-4": {
