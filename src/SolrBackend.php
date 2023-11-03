@@ -6,7 +6,8 @@ use Solarium\Client;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Solarium\Core\Client\Adapter\Curl;
 
-class SolrBackend {
+class SolrBackend implements BackendInterface
+{
 
     /* @var $client \Solarium\Client */
     private $client;
@@ -27,6 +28,63 @@ class SolrBackend {
             ]
         ]);
 
+    }
+
+    /**
+     * Indexes a piece of content.
+     *
+     * @param $id
+     * @param $content
+     * @return bool
+     */
+    public function indexContent($id, $content)
+    {
+        $update = $this->client->createUpdate();
+
+        $doc = $update->createDocument();
+        $doc->id = $id;
+        $doc->ts_text = $content;
+
+        $update->addDocuments([$doc]);
+        $update->addCommit();
+
+        return !!$this->client->update($update);
+    }
+
+    public function clearIndex()
+    {
+        $update = $this->client->createUpdate();
+
+        $update->addDeleteQuery('*:*');
+
+        $update->addCommit();
+
+        return !!$this->client->update($update);
+    }
+
+    public function search($prompt, $amount = 5)
+    {
+        $query = $this->client->createSelect();
+
+        $query->setQuery($prompt);
+
+        $dismax = $query->getDisMax();
+
+        $dismax->setQueryFields('ts_text');
+
+        $dismax->setMinimumMatch('50%');
+
+        $query->setStart(0)->setRows($amount);
+
+        $results = $this->client->select($query);
+
+        $return = [];
+
+        foreach ($results as $doc) {
+            $return[] = $doc->ts_text;
+        }
+
+        return $return;
     }
 
 }
