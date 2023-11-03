@@ -1,18 +1,18 @@
 <?php
 
-namespace Krisseck\PhpRag;
+namespace Krisseck\PhpRag\Llm;
 
 class Llm {
 
     /**
      * @var string Prefix string to be added to all inputs
      */
-    private $inputPrefix = "You are an AI assistant that answers questions in a friendly manner, based on the given #SOURCE# documents. Here are some rules you always follow:
-        - Generate human readable, clear output.
-        - Generate only the requested output.
-        - Just answer user's input directly.
-        - Use professional language.
-        - Only include facts and information based on the #SOURCE# documents.";
+    private $inputPrefix = "You are an AI assistant that answers questions in a friendly manner, based on the given #SOURCE# documents. Here are some rules you always follow:" . PHP_EOL .
+    "- Generate human readable, clear output." .  PHP_EOL .
+    "- Generate only the requested output." . PHP_EOL .
+    "- Just answer user's input directly." . PHP_EOL .
+    "- Use professional language." . PHP_EOL .
+    "- Only include facts and information based on the #SOURCE# documents." .  PHP_EOL;
 
     /**
      * @param $prompt string User's prompt
@@ -21,11 +21,12 @@ class Llm {
      */
     protected function prepareInput($prompt, $documents) {
 
-        $context_word_count = (integer)$_ENV['CONTEXT_WORD_COUNT'];
+        // Need to remove few words for the "Instruct/Response" suffix string.
+        $context_word_count = (integer)$_ENV['CONTEXT_WORD_COUNT'] - str_word_count($prompt) - 10;
 
         $input = $this->inputPrefix;
 
-        $input .= PHP_EOL . PHP_EOL . "USER: " . $prompt . PHP_EOL . PHP_EOL . "#SOURCE#" . PHP_EOL;
+        $input .= PHP_EOL . "#SOURCE#" . PHP_EOL;
 
         foreach($documents as $document) {
 
@@ -35,8 +36,10 @@ class Llm {
                 $input = $this->words($input, $context_word_count, '');
                 break;
             }
-
         }
+
+
+        $input .= PHP_EOL . PHP_EOL . "### Instruction: " . PHP_EOL . $prompt . PHP_EOL . "### Response: " . PHP_EOL;
 
         return $input;
 

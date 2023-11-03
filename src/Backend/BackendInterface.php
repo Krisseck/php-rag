@@ -1,6 +1,6 @@
 <?php
 
-namespace Krisseck\PhpRag;
+namespace Krisseck\PhpRag\Backend;
 
 interface BackendInterface {
 

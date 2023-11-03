@@ -1,10 +1,10 @@
 <?php
 
-namespace Krisseck\PhpRag;
+namespace Krisseck\PhpRag\Backend;
 
 use Solarium\Client;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Solarium\Core\Client\Adapter\Curl;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class SolrBackend implements BackendInterface
 {

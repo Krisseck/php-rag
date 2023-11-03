@@ -1,6 +1,6 @@
 <?php
 
-namespace Krisseck\PhpRag;
+namespace Krisseck\PhpRag\Llm;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;

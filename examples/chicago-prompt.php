@@ -1,7 +1,8 @@
 <?php
 
-use Krisseck\PhpRag\ReplicateLlm;
-use Krisseck\PhpRag\SolrBackend;
+use Krisseck\PhpRag\Backend\SolrBackend;
+use Krisseck\PhpRag\Llm\KoboldAiHordeLlm;
+use Krisseck\PhpRag\Llm\ReplicateLlm;
 
 require('../vendor/autoload.php');
 
@@ -13,13 +14,12 @@ $dotenv->load();
 $backend = new SolrBackend($_ENV['SOLR_HOST'], $_ENV['SOLR_PORT'], $_ENV['SOLR_CORE']);
 
 $llm = new ReplicateLlm($_ENV['REPLICATE_API_KEY'], $_ENV['REPLICATE_MODEL_VERSION']);
+//$llm = new KoboldAiHordeLlm($_ENV['KOBOLDAI_HORDE_API_KEY'], []);
 
 // User prompt, can be changed
-
 $prompt = "What is Chicago's name based on?";
 
 // Clear all data in index
-
 $backend->clearIndex();
 
 // Input example data
@@ -39,7 +39,6 @@ $documents = $backend->search($prompt);
 if($response = $llm->query($prompt, $documents)) {
 
     echo 'GOT RESPONSE' . PHP_EOL;
-
     echo $response . PHP_EOL;
 
 } else {
