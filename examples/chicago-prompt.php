@@ -41,6 +41,8 @@ if($response = $llm->query($prompt, $documents)) {
     echo 'GOT RESPONSE' . PHP_EOL;
     echo $response . PHP_EOL;
 
+    var_dump($response);
+
 } else {
 
     echo 'COULDN\'T GET RESPONSE' . PHP_EOL;

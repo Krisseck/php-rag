@@ -2,6 +2,8 @@
 
 namespace Krisseck\PhpRag\Llm;
 
+use Yethee\Tiktoken\EncoderProvider;
+
 class Llm {
 
     /**
@@ -21,8 +23,11 @@ class Llm {
      */
     protected function prepareInput($prompt, $documents) {
 
-        // Need to remove few words for the "Instruct/Response" suffix string.
-        $context_word_count = (integer)$_ENV['CONTEXT_WORD_COUNT'] - str_word_count($prompt) - 10;
+        $provider = new EncoderProvider();
+        $encoder = $provider->getForModel('gpt-4');
+
+        // Need to remove few tokens for the "Instruct/Response" suffix string.
+        $context_token_count = (integer)$_ENV['CONTEXT_TOKEN_COUNT'] - count($encoder->encode($prompt)) - 20;
 
         $input = $this->inputPrefix;
 
@@ -32,37 +37,18 @@ class Llm {
 
             $input .= $document . PHP_EOL;
 
-            if(str_word_count($input) > $context_word_count) {
-                $input = $this->words($input, $context_word_count, '');
+            $tokens = $encoder->encode($input);
+
+            if (count($tokens) > $context_token_count) {
+                $input = $encoder->decode(array_slice($tokens, 0, $context_token_count));
                 break;
             }
         }
-
 
         $input .= PHP_EOL . PHP_EOL . "### Instruction: " . PHP_EOL . $prompt . PHP_EOL . "### Response: " . PHP_EOL;
 
         return $input;
 
-    }
-
-    /**
-     * Limit the number of words in a string.
-     * Based on Illuminate\Support\Str
-     *
-     * @param  string  $value
-     * @param  int  $words
-     * @param  string  $end
-     * @return string
-     */
-    private function words($value, $words = 100, $end = '...')
-    {
-        preg_match('/^\s*+(?:\S++\s*+){1,'.$words.'}/u', $value, $matches);
-
-        if (! isset($matches[0]) || strlen($value) === strlen($matches[0])) {
-            return $value;
-        }
-
-        return rtrim($matches[0]).$end;
     }
 
 }

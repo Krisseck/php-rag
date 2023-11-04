@@ -28,7 +28,7 @@ If you are not using DDEV, you will need:
 - SOLR_HOST - Hostname of Solr server 
 - SOLR_PORT - Port of Solr server 
 - SOLR_CORE - Name of the core of the Solr server 
-- CONTEXT_WORD_COUNT - Maximum word count to be included in LLM context (note: it's words, not tokens!)
+- CONTEXT_TOKEN_COUNT - Maximum token count to be included in LLM context
 - REPLICATE_API_KEY - Replicate API key (if using Replicate LLM)
 - REPLICATE_MODEL_VERSION - Hash of the model version used in Replicate (if using Replicate LLM)
 - KOBOLDAI_HORDE_API_KEY - KoboldAI Horde API key (if using KoboldAI Horde LLM)
