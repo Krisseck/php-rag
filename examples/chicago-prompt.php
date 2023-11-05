@@ -16,6 +16,7 @@ $llm = new Krisseck\PhpRag\Llm\ReplicateLlm($_ENV['REPLICATE_API_KEY'], $_ENV['R
 
 // User prompt, can be changed
 $prompt = "What is Chicago's name based on?";
+#$prompt = "When was the previous fire before the great fire of London?";
 
 // Clear all data in index
 $backend->clearIndex();

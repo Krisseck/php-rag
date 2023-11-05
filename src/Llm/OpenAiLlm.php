@@ -28,12 +28,17 @@ class OpenAiLlm extends Llm implements LlmInterface {
 
         try {
 
-            $response = $this->client->completions()->create([
+            $response = $this->client->chat()->create([
                 'model' => $this->model,
-                'prompt' => $input
+                'messages' => [
+                    [
+                        'content' => $input,
+                        'role' => 'user'
+                    ]
+                ]
             ]);
 
-            if (!empty($response->choices[0]->text)) return $response->choices[0]->text;
+            if (!empty($response->choices[0]->message->content)) return $response->choices[0]->message->content;
 
         } catch(\Exception $e) {
             // Something failed when querying OpenAI
