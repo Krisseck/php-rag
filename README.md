@@ -27,7 +27,10 @@ If you are not using DDEV, you will need:
 
 - SOLR_HOST - Hostname of Solr server 
 - SOLR_PORT - Port of Solr server 
-- SOLR_CORE - Name of the core of the Solr server 
+- SOLR_CORE - Name of the core of the Solr server
+- ELASTIC_HOST - Hostname and port of Elastic server
+- ELASTIC_API_KEY - API key of Elastic server
+- ELASTIC_INDEX - Name of the index of the Elastic server
 - CONTEXT_TOKEN_COUNT - Maximum token count to be included in LLM context
 - REPLICATE_API_KEY - Replicate API key (if using Replicate LLM)
 - REPLICATE_MODEL_VERSION - Hash of the model version used in Replicate (if using Replicate LLM)
@@ -35,11 +38,17 @@ If you are not using DDEV, you will need:
 
 ### Backend (database)
 
-Currently only supports Solr server. But more backends (like SQL or Elasticsearch) can be done easily, just implement the `Krisseck\PhpRag\Backend\BackendInterface`.
+- Solr
+- ElasticSearch
+
+More backends (like MySQL or Sqlite) can be done easily, just implement the `Krisseck\PhpRag\Backend\BackendInterface`.
 
 ### LLM
 
-Supports both Replicate and KoboldAI LLM services. Replicate is easier to use, you can get a free API key on https://replicate.com/. 
+- Replicate
+- KoboldAI Horde
+
+Replicate is easier to use, you can get a free API key on https://replicate.com/. 
 
 For Replicate, you need to provide the hash of the model version you will be using. You can get the hash from "Versions" tab on a model's page.
 

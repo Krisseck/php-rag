@@ -5,7 +5,8 @@
         "guzzlehttp/guzzle": "^7.8",
         "vlucas/phpdotenv": "^5.5",
         "symfony/event-dispatcher": "^6.3",
-        "yethee/tiktoken": "^0.2.0"
+        "yethee/tiktoken": "^0.2.0",
+        "elasticsearch/elasticsearch": "^8.10"
     },
     "autoload": {
         "psr-4": {
@@ -17,5 +18,10 @@
             "name": "Kristian Polso",
             "email": "kristian@polso.info"
         }
-    ]
+    ],
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
 }

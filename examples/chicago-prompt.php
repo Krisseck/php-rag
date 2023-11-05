@@ -1,9 +1,5 @@
 <?php
 
-use Krisseck\PhpRag\Backend\SolrBackend;
-use Krisseck\PhpRag\Llm\KoboldAiHordeLlm;
-use Krisseck\PhpRag\Llm\ReplicateLlm;
-
 require('../vendor/autoload.php');
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
@@ -11,10 +7,11 @@ $dotenv->load();
 
 // Load backend & LLM
 
-$backend = new SolrBackend($_ENV['SOLR_HOST'], $_ENV['SOLR_PORT'], $_ENV['SOLR_CORE']);
+$backend = new Krisseck\PhpRag\Backend\SolrBackend($_ENV['SOLR_HOST'], $_ENV['SOLR_PORT'], $_ENV['SOLR_CORE']);
+#$backend = new Krisseck\PhpRag\Backend\ElasticBackend($_ENV['ELASTIC_HOST'], $_ENV['ELASTIC_API_KEY'], $_ENV['ELASTIC_INDEX']);
 
-$llm = new ReplicateLlm($_ENV['REPLICATE_API_KEY'], $_ENV['REPLICATE_MODEL_VERSION']);
-//$llm = new KoboldAiHordeLlm($_ENV['KOBOLDAI_HORDE_API_KEY'], []);
+$llm = new Krisseck\PhpRag\Llm\ReplicateLlm($_ENV['REPLICATE_API_KEY'], $_ENV['REPLICATE_MODEL_VERSION']);
+#$llm = new  Krisseck\PhpRag\Llm\KoboldAiHordeLlm($_ENV['KOBOLDAI_HORDE_API_KEY'], []);
 
 // User prompt, can be changed
 $prompt = "What is Chicago's name based on?";
@@ -39,9 +36,7 @@ $documents = $backend->search($prompt);
 if($response = $llm->query($prompt, $documents)) {
 
     echo 'GOT RESPONSE' . PHP_EOL;
-    echo $response . PHP_EOL;
-
-    var_dump($response);
+    echo trim($response) . PHP_EOL;
 
 } else {
 
