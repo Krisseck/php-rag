@@ -12,6 +12,7 @@ $backend = new Krisseck\PhpRag\Backend\SolrBackend($_ENV['SOLR_HOST'], $_ENV['SO
 
 $llm = new Krisseck\PhpRag\Llm\ReplicateLlm($_ENV['REPLICATE_API_KEY'], $_ENV['REPLICATE_MODEL_VERSION']);
 #$llm = new  Krisseck\PhpRag\Llm\KoboldAiHordeLlm($_ENV['KOBOLDAI_HORDE_API_KEY'], []);
+#$llm = new Krisseck\PhpRag\Llm\OpenAiLlm($_ENV['OPENAI_API_KEY'], $_ENV['OPENAI_MODEL']);
 
 // User prompt, can be changed
 $prompt = "What is Chicago's name based on?";

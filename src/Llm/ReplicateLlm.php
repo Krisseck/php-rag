@@ -14,6 +14,9 @@ class ReplicateLlm extends Llm implements LlmInterface {
      */
     private $model_version;
 
+    /* @var $client \GuzzleHttp\Client */
+    private $client;
+
     public function __construct($token, $model_version) {
         $this->client = new Client([
             'headers' => [

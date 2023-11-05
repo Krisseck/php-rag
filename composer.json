@@ -6,7 +6,8 @@
         "vlucas/phpdotenv": "^5.5",
         "symfony/event-dispatcher": "^6.3",
         "yethee/tiktoken": "^0.2.0",
-        "elasticsearch/elasticsearch": "^8.10"
+        "elasticsearch/elasticsearch": "^8.10",
+        "openai-php/client": "^0.7.4"
     },
     "autoload": {
         "psr-4": {

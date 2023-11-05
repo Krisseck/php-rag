@@ -35,6 +35,8 @@ If you are not using DDEV, you will need:
 - REPLICATE_API_KEY - Replicate API key (if using Replicate LLM)
 - REPLICATE_MODEL_VERSION - Hash of the model version used in Replicate (if using Replicate LLM)
 - KOBOLDAI_HORDE_API_KEY - KoboldAI Horde API key (if using KoboldAI Horde LLM)
+- OPENAI_API_KEY - OpenAI API key
+- OPENAI_MODEL - Name of the model used in OpenAI query
 
 ### Backend (database)
 
@@ -45,10 +47,11 @@ More backends (like MySQL or Sqlite) can be done easily, just implement the `Kri
 
 ### LLM
 
+- OpenAI
 - Replicate
 - KoboldAI Horde
 
-Replicate is easier to use, you can get a free API key on https://replicate.com/. 
+Replicate is the easiest to use, you can get a free API key on https://replicate.com/. 
 
 For Replicate, you need to provide the hash of the model version you will be using. You can get the hash from "Versions" tab on a model's page.
 
