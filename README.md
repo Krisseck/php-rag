@@ -1,6 +1,12 @@
 # PHP-RAG
 
-A "chatbot" built with PHP, Solr (or other DB backend) and LLM of choice. Proof of concept mostly.
+An AI assistant ("chatbot") built with PHP, Solr (or other DB backend) and LLM of choice. Proof of concept mostly.
+
+## Idea
+
+[What is retrieval-augmented generation? | IBM](https://research.ibm.com/blog/retrieval-augmented-generation-RAG)
+
+![Diagram of RAG process](https://github.com/Krisseck/php-rag/assets/471887/8fe6bd2b-f117-4c5e-b578-0b7f4c336c63)
 
 ## Installation
 
